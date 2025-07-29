@@ -47,7 +47,7 @@ async function handleCount() {
     triggerConfetti();
 
     const tweetText = encodeURIComponent(
-      `Check this out guys!\nI have posted the word ZKGM ${x} times.\n\nTry it yourself 👉 union-zkgm.vercel.app`
+      `Check this out guys!\nI have posted the word ZKGM ${x} times.\n\nTry it yourself 👉 union-zkgm.vercel.app \nhttps://x.com/Shinosuka_eth/status/1950238026799714779
     );
 
     document.getElementById("tweet-button").onclick = () => {
