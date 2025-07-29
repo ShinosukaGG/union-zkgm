@@ -1,15 +1,35 @@
 async function handleCount() {
-  const username = document.getElementById("username").value.trim();
-  if (!username) return;
+  const rawInput = document.getElementById("username").value.trim();
+  if (!rawInput) return;
+
+  const username = rawInput.startsWith("@") ? rawInput.slice(1).toLowerCase() : rawInput.toLowerCase();
+  console.log("Sanitized Username:", username);
 
   try {
     const res = await fetch("top_2000_from_network.json");
-    const data = await res.json();
-    const user = data.find(u => u.Username.toLowerCase() === username.toLowerCase());
+    const json = await res.json();
 
-    let mindshare = user?.Mindshare ?? 0.02;
+    // Confirm JSON structure
+    console.log("Loaded JSON keys:", Object.keys(json).slice(0, 5));
+
+    const userEntry = Object.values(json).find(
+      entry => entry.Username?.toLowerCase() === username
+    );
+
+    if (!userEntry) {
+      document.getElementById("input-box").style.display = "none";
+      document.getElementById("result-box").style.display = "flex";
+      document.getElementById("count-display").innerText = `User not found 😕`;
+      document.getElementById("description").innerText = `We couldn't locate a mindshare entry for "${rawInput}". Try a different username.`;
+      return;
+    }
+
+    let mindshare = userEntry.Mindshare;
+    console.log("Original Mindshare:", mindshare);
+
     if (mindshare < 0.01) mindshare = 0.02;
     if (mindshare > 0.5) mindshare -= 0.15;
+    console.log("Adjusted Mindshare:", mindshare);
 
     const base = Math.floor((mindshare / 100) * 1039596);
     const random = Math.floor(Math.random() * 401) + 100;
@@ -17,6 +37,8 @@ async function handleCount() {
     if (x > 5000) x -= 1000;
 
     const roundedTarget = Math.ceil(x / 100) * 100;
+
+    console.log(`Final ZKGM count: ${x}, Target: ${roundedTarget}`);
 
     document.getElementById("count-display").innerText = `You have said ZKGM ${x} times!`;
     document.getElementById("description").innerText = `Congratulations 🎉, you have said ZKGM over ${x} times!\nNext target: ${roundedTarget}`;
@@ -35,7 +57,8 @@ async function handleCount() {
     };
 
   } catch (error) {
-    console.error("Failed to fetch or calculate:", error);
+    console.error("Error occurred:", error);
+    alert("Something went wrong. Check console for details.");
   }
 }
 
