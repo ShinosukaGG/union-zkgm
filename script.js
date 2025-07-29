@@ -7,16 +7,13 @@ async function handleCount() {
 
   try {
     const res = await fetch("top_2000_from_network.json");
-    const json = await res.json();
+    const data = await res.json(); // data is an array
+    console.log("Fetched entries:", data.length);
 
-    // Confirm JSON structure
-    console.log("Loaded JSON keys:", Object.keys(json).slice(0, 5));
+    // Find matching username (case-insensitive)
+    const user = data.find(entry => entry.username.toLowerCase() === username);
 
-    const userEntry = Object.values(json).find(
-      entry => entry.Username?.toLowerCase() === username
-    );
-
-    if (!userEntry) {
+    if (!user) {
       document.getElementById("input-box").style.display = "none";
       document.getElementById("result-box").style.display = "flex";
       document.getElementById("count-display").innerText = `User not found 😕`;
@@ -24,7 +21,8 @@ async function handleCount() {
       return;
     }
 
-    let mindshare = userEntry.Mindshare;
+    // Extract and parse mindshare string (like "1.11%")
+    let mindshare = parseFloat(user.mindshare.replace('%', ''));
     console.log("Original Mindshare:", mindshare);
 
     if (mindshare < 0.01) mindshare = 0.02;
@@ -57,8 +55,8 @@ async function handleCount() {
     };
 
   } catch (error) {
-    console.error("Error occurred:", error);
-    alert("Something went wrong. Check console for details.");
+    console.error("Error fetching or processing JSON:", error);
+    alert("Something went wrong while fetching data.");
   }
 }
 
