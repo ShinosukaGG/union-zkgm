@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZKGM Counter</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Supermolot:wght@400;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo-area">
+      <img src="badge3.png" alt="Union Logo">
+      <span>UNION</span>
+    </div>
+    <div class="center-link">
+      <a href="https://x.com/shinosuka_eth" target="_blank">ZKGM Counter by Shinosuka</a>
+    </div>
+    <button class="confetti-button" onclick="triggerConfetti()">🎉</button>
+  </header>
+
+  <div class="main-content">
+    <div class="box" id="input-box">
+      <h2>Enter Your Username to Count ZKGMs</h2>
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Enter username...">
+        <button onclick="handleCount()">Count</button>
+      </div>
+    </div>
+
+    <div class="box results" id="result-box">
+      <h2 id="count-display"></h2>
+      <p id="description"></p>
+      <button class="tweet-button" id="tweet-button">Share Your Stats on X!</button>
+    </div>
+  </div>
+
+  <footer>
+    The amount of ZKGM is estimated from your all time mindshare and a set of various datas, it is not accurate and is subject to change over time.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="script.js"></script>
+</body>
+        </html>
