@@ -126,7 +126,7 @@ async function checkIfInTop2000(username) {
     return isInTop2000;
   } catch(e) {
     console.error('Error loading top_2000_from_network.json', e);
-    showToast('Network check failed');
+    showToast('User Not Found');
     return false;
   }
 }
@@ -248,20 +248,18 @@ function showResult(username, count, s0, s1, combined, pfp){
   const nextTarget = Math.ceil(target/100)*100;
   descriptionDisplay.textContent = target === 0
     ? 'No ZKGM detected yet.'
-    : `All-time ZKGM detected.\nNext target: ${nextTarget.toLocaleString()}`;
+    : `You Are a True Union Maxi! Keep Preaching Union.\n\nNext target: ${nextTarget.toLocaleString()}`;
   renderChips(s0, s1, combined);
   inputCard.classList.add('hidden');
   resultCard.classList.remove('hidden');
   if(target > 0) confettiBurst(1200);
   const tweetText =
 `I have said the word ZKGM ${target.toLocaleString()} times 🤯
-
 Can anyone beat me?
 
 Check yours: union-zkgm.vercel.app
 
-Union army is strong together.
-zkgm.
+Lets Hit 1M+ ZKGM this Month
 
 #twit`;
   tweetBtn.onclick = ()=> window.open(
