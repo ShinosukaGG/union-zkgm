@@ -261,7 +261,7 @@ Check yours: union-zkgm.vercel.app
 
 Lets Hit 1M+ ZKGM this Month
 
-#twit`;
+https://x.com/Shinosuka_eth/status/1954803001203229024`;
   tweetBtn.onclick = ()=> window.open(
     `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`,
     '_blank'
