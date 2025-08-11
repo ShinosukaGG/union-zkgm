@@ -2,44 +2,111 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZKGM Counter</title>
+  <title>ZKGM Counter v2</title>
+
+  <!-- Brand fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Supermolot:wght@400;700&display=swap">
-  <link rel="stylesheet" href="styles.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
+  <!-- Header -->
+  <header class="header" role="banner">
     <div class="logo-area">
-      <img src="badge3.png" alt="Union Logo">
-      <span>UNION</span>
+      <img src="badge3.png" alt="Union badge" class="logo">
+      <span class="brand-word">UNION</span>
     </div>
+
     <div class="center-link">
-      <a href="https://x.com/shinosuka_eth" target="_blank">ZKGM Counter by Shinosuka</a>
+      <a href="https://x.com/shinosuka_eth" target="_blank" rel="noopener noreferrer">
+        ZKGM Counter by Shinosuka
+      </a>
     </div>
-    <button class="confetti-button" onclick="triggerConfetti()">🎉</button>
+
+    <div class="actions">
+      <button class="mute-toggle" id="mute-toggle" aria-pressed="true" title="Toggle sounds">🔇</button>
+      <button class="confetti-button" id="confetti-btn" title="Celebrate!">🎉</button>
+    </div>
   </header>
 
-  <div class="main-content">
-    <div class="box" id="input-box">
-      <h2>Enter Your Username to Count ZKGMs</h2>
-      <div class="input-group">
-        <input type="text" id="username" placeholder="Enter username...">
-        <button onclick="handleCount()">Count</button>
+  <!-- Main -->
+  <main class="main-content" id="main" role="main">
+    <!-- Input Card -->
+    <section class="box card" id="input-box" aria-labelledby="input-title">
+      <h1 class="title" id="input-title">Check your ZKGM total</h1>
+      <p class="subtitle">Enter your X username to reveal how many times you’ve said <strong>ZKGM</strong> all-time.</p>
+
+      <div class="input-group" role="group" aria-label="Enter username">
+        <div class="at-prefix" aria-hidden="true">@</div>
+        <input
+          type="text"
+          id="username"
+          class="input"
+          placeholder="yourhandle"
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="X username without @"
+          inputmode="twitter"
+        />
+        <button class="btn primary" id="count-btn">Count</button>
       </div>
-    </div>
 
-    <div class="box results" id="result-box">
-      <h2 id="count-display"></h2>
-      <p id="description"></p>
-      <button class="tweet-button" id="tweet-button">Share Your Stats on X!</button>
-    </div>
-  </div>
+      <div class="hint">Tip: you can paste with @ — we’ll clean it up.</div>
 
-  <footer>
-    The amount of ZKGM is estimated from your all time mindshare and a set of various datas, it is not accurate and is subject to change over time.
+      <!-- Loader -->
+      <div class="loading hidden" id="loading" aria-live="polite" aria-busy="true">
+        <div class="shim title-shim"></div>
+        <div class="shim line-shim"></div>
+        <div class="shim line-shim short"></div>
+      </div>
+    </section>
+
+    <!-- Result Card -->
+    <section class="box card results hidden" id="result-box" aria-live="polite" aria-atomic="true">
+      <!-- Profile header -->
+      <div class="profile">
+        <img id="pfp" class="pfp" src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png" alt="Profile picture">
+        <div class="meta">
+          <div class="handle" id="handle">@username</div>
+          <div class="chips" id="chips">
+            <!-- dynamic chips: <span class="chip">S0 0.42%</span> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Big number -->
+      <h2 class="count" id="count-display" aria-live="polite">ZKGM —</h2>
+      <p class="desc" id="description">Fetching your ZKGM history…</p>
+
+      <!-- CTA -->
+      <div class="cta-row">
+        <button class="btn primary wide" id="tweet-button">Share on X</button>
+        <button class="btn ghost wide" id="recount-button">Check another</button>
+      </div>
+
+      <!-- Provenance line -->
+      <div class="source-note">Powered by Union activity signals.</div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    This ZKGM total is modeled from your Union activity and signals, and may not be exact. Results can change over time.
   </footer>
 
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Confetti -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- External libs -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- App -->
   <script src="script.js"></script>
 </body>
-        </html>
+</html>
